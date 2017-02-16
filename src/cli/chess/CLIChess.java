@@ -1,17 +1,12 @@
 package cli.chess;
+
+import java.util.Scanner;
+
 public class CLIChess {
 
-    /**
-     * @param args the command line arguments
-     */
+    //Entry point for program. Initialise game instance.
     public static void main(String[] args) {
-       System.out.println("Running");
-       startGame();
-    }
-    
-    //Creates pieces, and maps out game
-    public static void startGame(){
-        Board board = new Board();
-        board.showBoard();
+        Game newGame = new Game();
+        newGame.initGame();
     }
 }

@@ -10,18 +10,29 @@ package cli.chess;
  * @author jhowell
  */
 public class Board {
-    
+
     //Pass list of pieces to draw on board
-    public void showBoard(){
-        System.out.println(     ""
-                + "1|   "
-                + "2|   "
-                + "3|   "
-                + "4|   "
-                + "5|   "
-                + "6|   "
-                + "7|   "
-                + "8|   "
-                + "");
+    //Currently placeholders, will add proper pieces later
+    public void showBoard() {
+        System.out.println("_________________________________________________________________________");
+        System.out.println("                    ---------------------------------");
+        System.out.println("                    | b | b | b | b | b | b | b | b |");
+        System.out.println("                    ---------------------------------");
+        System.out.println("                    | b | b | b | b | b | b | b | b |");
+        System.out.println("                    ---------------------------------");
+        System.out.println("                    |   |   |   |   |   |   |   |   |");
+        System.out.println("                    ---------------------------------");
+        System.out.println("                    |   |   |   |   |   |   |   |   |");
+        System.out.println("                    ---------------------------------");
+        System.out.println("                    |   |   |   |   |   |   |   |   |");
+        System.out.println("                    ---------------------------------");
+        System.out.println("                    |   |   |   |   |   |   |   |   |");
+        System.out.println("                    ---------------------------------");
+        System.out.println("                    | w | w | w | w | w | w | w | w |");
+        System.out.println("                    ---------------------------------");
+        System.out.println("                    | w | w | w | w | w | w | w | w |");
+        System.out.println("                    ---------------------------------");
+        System.out.println("_________________________________________________________________________");
+
     }
 }
