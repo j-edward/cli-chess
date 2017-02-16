@@ -2,7 +2,7 @@
 
 This is a simple Chess game I'm making for fun. Made one back in first year of Computing A-Level, but was far from ideal.
 
-![Screenshot1](https://github.com/j-edward/CLI-Chess/blob/img/chess_screens.jpg)
+![Screenshot1](https://github.com/j-edward/CLI-Chess/blob/img/chess_screens.png)
 
 ## Aims
 * Actually **finish** one of these projects...
