@@ -10,6 +10,12 @@ package pieces;
  * @author jhowell
  */
 public interface IPiece {
+
     void onMove(int x, int y);
+
     void onDestroy();
+
+    char getPieceType();
+
+    void setPieceType(char side);
 }

@@ -9,10 +9,24 @@ package pieces;
  *
  * @author jhowell
  */
-public abstract class Piece implements IPiece{
+public abstract class Piece implements IPiece {
+
     private int xCoordinate;
     private int yCoordinate;
-    
+    private char colour;
+
+    public Piece(char inputColour) {
+        colour = inputColour;
+    }
+
+    public char getColour() {
+        return colour;
+    }
+
+    public void setColour(char colour) {
+        this.colour = colour;
+    }
+
     public int getxCoordinate() {
         return xCoordinate;
     }

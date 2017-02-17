@@ -7,32 +7,18 @@ package pieces;
 
 /**
  *
- * @author jhowell
+ * @author Joe
  */
-public class Pawn extends Piece {
+public class Empty extends Piece {
 
-    private final char whitePiece = '♙';
-    private final char blackPiece = '♟';
-    private char pieceIcon;
-    
-    public void setPieceType(char side) {
-        switch (side) {
-            case 'W':
-                pieceIcon = whitePiece;
-                break;
-            case 'B':
-                pieceIcon = blackPiece;
-                break;
-        }
+    private final char pieceType = ' ';
+
+    public Empty(char inputColour) {
+        super(inputColour);
     }
 
     public char getPieceType() {
-        return pieceIcon;
-    }
-
-    public Pawn(char inputColour) {
-        super(inputColour);
-        setPieceType(inputColour);
+        return pieceType;
     }
 
     @Override
@@ -45,4 +31,8 @@ public class Pawn extends Piece {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void setPieceType(char side) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -9,7 +9,31 @@ package pieces;
  *
  * @author jhowell
  */
-public class Castle extends Piece{
+public class Castle extends Piece {
+
+    private final char whitePiece = '♖';
+    private final char blackPiece = '♜';
+    private char pieceIcon;
+    
+    public void setPieceType(char side) {
+        switch (side) {
+            case 'W':
+                pieceIcon = whitePiece;
+                break;
+            case 'B':
+                pieceIcon = blackPiece;
+                break;
+        }
+    }
+
+    public char getPieceType() {
+        return pieceIcon;
+    }
+
+    public Castle(char inputColour) {
+        super(inputColour);
+        setPieceType(inputColour);
+    }
 
     @Override
     public void onMove(int x, int y) {
@@ -20,5 +44,5 @@ public class Castle extends Piece{
     public void onDestroy() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
