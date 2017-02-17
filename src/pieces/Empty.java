@@ -15,6 +15,7 @@ public class Empty extends Piece {
 
     public Empty(char inputColour) {
         super(inputColour);
+        super.setAlive('N');
     }
 
     public char getPieceType() {

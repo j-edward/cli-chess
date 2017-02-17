@@ -8,51 +8,94 @@ public class Game {
     Board board;
     Scanner inputScanner = new Scanner(System.in);
     Piece[][] pieceArray = new Piece[8][8];
+    Piece selectedPiece;
     String player1Input;
     boolean playAgain;
-    
-    public void getMove(String input) {
+    boolean gameOver;
+    boolean move = false;
+    int turn;
+
+    public void doTurn() {
         System.out.println("");
+        while (!gameOver) {
+            
+            //Start turn
+            switch (turn % 2) {
+                case 0:
+                    //P1 turn
+                    while (!move) {
+                        System.out.println("Please select a piece to move: [a-h, 0-8]");
+                        validateTurn(player1Input = inputScanner.nextLine());
+                    }
+                    break;
+                case 1:
+                    //CPU turn
+                    break;
+            }
+            
+            //Do collision detection.
+            
+            //End of turn, increment turn value
+            turn++;
+        }
+    }
+
+    public boolean validateTurn(String input) {
+        int x = (int) input.charAt(0);
+        int y = (int) input.charAt(1);
+        Piece tempPiece = pieceArray[x][y];
+
+        if (tempPiece.getAlive() == 'Y') {
+            selectedPiece = tempPiece;
+            return true;
+        } else{
+            System.out.println("Incorrect selection.");
+           return false;   
+        }
     }
 
     //Starts game with user choices.
     public void startGame(char side) {
         System.out.println("Starting game for " + side + " side...");
         System.out.println("_________________________________________________________________________");
-        initBoard(pieceArray, side);
+        generatePieces(pieceArray, side);
         board.showBoard(pieceArray);
+        doTurn();
+        System.out.println("Thank you for playing! :)");
     }
 
     //Create pieces in array.
-    public void initBoard(Piece[][] pieces, char choice) {
-        char opp = '1';
+    public void generatePieces(Piece[][] pieces, char userColour) {
+        char oppColour = '1';
 
-        switch (choice) {
+        //Based on user's choice of side, make set opposition to the opposite.
+        switch (userColour) {
             case 'W':
-                opp = 'B';
+                oppColour = 'B';
                 break;
             case 'B':
-                opp = 'W';
+                oppColour = 'W';
                 break;
         }
 
-        for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0; j < pieces.length; j++) {
-                switch (i) {
+        //Main loop for generating pieces on board
+        for (int row = 0; row < pieces.length; row++) {
+            for (int column = 0; column < pieces.length; column++) {
+                switch (row) {
                     case 0:
-                        royalRow(pieces, i, j, opp);
+                        generateRoyalRowPieces(pieces, row, column, oppColour);
                         break;
                     case 1:
-                        pieces[i][j] = new Pawn(opp);
+                        pieces[row][column] = new Pawn(oppColour);
                         break;
                     case 6:
-                        pieces[i][j] = new Pawn(choice);
+                        pieces[row][column] = new Pawn(userColour);
                         break;
                     case 7:
-                        royalRow(pieces, i, j, choice);
+                        generateRoyalRowPieces(pieces, row, column, userColour);
                         break;
                     default:
-                        pieces[i][j] = new Empty(' ');
+                        pieces[row][column] = new Empty(' ');
                 }
 
             }
@@ -60,31 +103,31 @@ public class Game {
     }
 
     //Switch case for 'royal row' on board.
-    public void royalRow(Piece[][] pieces, int i, int j, char colour) {
-        switch (j) {
+    public void generateRoyalRowPieces(Piece[][] pieces, int row, int column, char colour) {
+        switch (column) {
             case 0:
-                pieces[i][j] = new Castle(colour);
+                pieces[row][column] = new Castle(colour);
                 break;
             case 1:
-                pieces[i][j] = new Knight(colour);
+                pieces[row][column] = new Knight(colour);
                 break;
             case 2:
-                pieces[i][j] = new Bishop(colour);
+                pieces[row][column] = new Bishop(colour);
                 break;
             case 3:
-                pieces[i][j] = new Queen(colour);
+                pieces[row][column] = new Queen(colour);
                 break;
             case 4:
-                pieces[i][j] = new King(colour);
+                pieces[row][column] = new King(colour);
                 break;
             case 5:
-                pieces[i][j] = new Bishop(colour);
+                pieces[row][column] = new Bishop(colour);
                 break;
             case 6:
-                pieces[i][j] = new Knight(colour);
+                pieces[row][column] = new Knight(colour);
                 break;
             case 7:
-                pieces[i][j] = new Castle(colour);
+                pieces[row][column] = new Castle(colour);
                 break;
         }
     }
@@ -93,8 +136,8 @@ public class Game {
     //Additionally asks user for side preference.
     public void initGame() {
         board = new Board();
-        
-        demoBoard();
+
+        board.demoBoard();
         System.out.println("                            Welcome to Chess CLI.");
         System.out.println("                         Created by Joe Howell, 2017.");
         System.out.println("_________________________________________________________________________");
@@ -108,9 +151,11 @@ public class Game {
             System.out.println(player1Input);
             switch (player1Input) {
                 case "B":
+                    turn = 1;
                     startGame('B');
                     break;
                 case "W":
+                    turn = 0;
                     startGame('W');
                     break;
                 case "exit":
@@ -118,32 +163,7 @@ public class Game {
                     break;
                 default:
                     System.out.println(player1Input + " is not a valid input. Please try again.");
-
             }
         }
-    }
-
-    //I'm well aware there is 9 spaces on the blank rows... still figuring out a solution to the blank space...
-    public void demoBoard() {
-        System.out.println("_________________________________________________________________________");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    | ♜ | ♞ | ♝ | ♛ | ♚ | ♝ | ♞ | ♜ |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    | ♟ | ♟ | ♟ | ♟ | ♟ | ♟ | ♟ | ♟ |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    |   |   |   |   |   |   |   |   |   |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    |   |   |   |   |   |   |   |   |   |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    |   |   |   |   |   |   |   |   |   |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    |   |   |   |   |   |   |   |   |   |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    | ♖ | ♘ | ♗ | ♕ | ♔ | ♗ | ♘ | ♖ |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("_________________________________________________________________________");
-
     }
 }
