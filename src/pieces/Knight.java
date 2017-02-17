@@ -14,7 +14,7 @@ public class Knight extends Piece {
     private final char whitePiece = '♘';
     private final char blackPiece = '♞';
     private char pieceIcon;
-    
+
     public void setPieceType(char side) {
         switch (side) {
             case 'W':

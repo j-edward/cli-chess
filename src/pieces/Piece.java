@@ -11,12 +11,20 @@ package pieces;
  */
 public abstract class Piece implements IPiece {
 
-    private int xCoordinate;
-    private int yCoordinate;
     private char colour;
+    private char alive;
 
     public Piece(char inputColour) {
         colour = inputColour;
+        alive = 'Y';
+    }
+
+    public char getAlive() {
+        return alive;
+    }
+
+    public void setAlive(char alive) {
+        this.alive = alive;
     }
 
     public char getColour() {
@@ -25,21 +33,5 @@ public abstract class Piece implements IPiece {
 
     public void setColour(char colour) {
         this.colour = colour;
-    }
-
-    public int getxCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setxCoordinate(int xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
-
-    public int getyCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setyCoordinate(int yCoordinate) {
-        this.yCoordinate = yCoordinate;
     }
 }

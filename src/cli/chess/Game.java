@@ -6,8 +6,11 @@ import pieces.*;
 public class Game {
 
     Board board;
+    Scanner inputScanner = new Scanner(System.in);
     Piece[][] pieceArray = new Piece[8][8];
-
+    String player1Input;
+    boolean playAgain;
+    
     public void getMove(String input) {
         System.out.println("");
     }
@@ -22,15 +25,15 @@ public class Game {
 
     //Create pieces in array.
     public void initBoard(Piece[][] pieces, char choice) {
-        char opp;
-        char side;
+        char opp = '1';
 
-        if (choice == 'W') {
-            opp = 'B';
-            side = 'W';
-        } else {
-            opp = 'W';
-            side = 'B';
+        switch (choice) {
+            case 'W':
+                opp = 'B';
+                break;
+            case 'B':
+                opp = 'W';
+                break;
         }
 
         for (int i = 0; i < pieces.length; i++) {
@@ -43,10 +46,10 @@ public class Game {
                         pieces[i][j] = new Pawn(opp);
                         break;
                     case 6:
-                        pieces[i][j] = new Pawn(side);
+                        pieces[i][j] = new Pawn(choice);
                         break;
                     case 7:
-                        royalRow(pieces, i, j, side);
+                        royalRow(pieces, i, j, choice);
                         break;
                     default:
                         pieces[i][j] = new Empty(' ');
@@ -89,10 +92,6 @@ public class Game {
     //Creates pieces, and maps out game.
     //Additionally asks user for side preference.
     public void initGame() {
-        boolean playAgain;
-        Scanner inputScanner = new Scanner(System.in);
-        String input;
-
         board = new Board();
         
         demoBoard();
@@ -101,12 +100,13 @@ public class Game {
         System.out.println("_________________________________________________________________________");
         System.out.println("");
         System.out.println("Please enter your choice of colour ('W' or 'B') to start.");
-        playAgain = true;
 
+        playAgain = true;
         while (playAgain) {
-            input = inputScanner.nextLine();
+            player1Input = inputScanner.nextLine();
             System.out.println("_________________________________________________________________________");
-            switch (input) {
+            System.out.println(player1Input);
+            switch (player1Input) {
                 case "B":
                     startGame('B');
                     break;
@@ -117,14 +117,14 @@ public class Game {
                     playAgain = false;
                     break;
                 default:
-                    System.out.println(input + " is not a valid input. Please try again.");
+                    System.out.println(player1Input + " is not a valid input. Please try again.");
 
             }
         }
     }
-    
-    //I'm well aware there is 9 spaces on the black rows... still figuring out a solution to the blank space...
-    public void demoBoard(){
+
+    //I'm well aware there is 9 spaces on the blank rows... still figuring out a solution to the blank space...
+    public void demoBoard() {
         System.out.println("_________________________________________________________________________");
         System.out.println("                    -------------------------------------");
         System.out.println("                    | ♜ | ♞ | ♝ | ♛ | ♚ | ♝ | ♞ | ♜ |");
