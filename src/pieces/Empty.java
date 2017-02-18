@@ -5,6 +5,7 @@ public class Empty extends Piece {
     private final char pieceType = ' ';
 
     public Empty() {
+        super('1');
         super.setAlive('N');
     }
 
@@ -23,7 +24,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public void setPieceIcon(char side) {
+    public void setPieceIcon() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

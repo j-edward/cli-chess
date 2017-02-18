@@ -15,6 +15,8 @@ public class Game {
     char userColour;
     char oppColour;
     int turn;
+    int selectedX;
+    int selectedY;
 
     //Creates pieces, and maps out game.
     //Additionally asks user for side preference.
@@ -53,48 +55,69 @@ public class Game {
 
     //Starts game with user choices.
     public void startGame() {
-        boolean move;
         boolean gameOver;
+
         System.out.println("Starting game for " + userColour + " side...");
         System.out.println("_________________________________________________________________________");
 
         generatePieces();
-        board.showBoard(pieceArray);
-        System.out.println("");
 
         gameOver = false;
-        while (!gameOver) {
-            
-            move = false;
+        do {
+            board.showBoard(pieceArray);
+            System.out.println("_________________________________________________________________________");
+
             //Start turn
             switch (turn % 2) {
                 case 0:
-                    //P1 turn
-                    while (!move) {
-                        System.out.println("Please select a piece to move: [a-h, 0-8]");
-                        player1Input = inputScanner.nextLine();
-                        move = validateSelectedPiece(player1Input);
-                    }
-                    move = false;
-
-                    while (!move) {
-                        System.out.println("Now please enter a destination for the piece: [a-h, 0-8]");
-                        player1Input = inputScanner.nextLine();
-                        move = validateSelectedPieceDestination(player1Input);
-                    }
+                    //P1 turn.
+                    doTurn(userColour);
                     break;
                 case 1:
-                    //CPU turn
+                    //CPU turn.
+                    doTurn(oppColour);
                     break;
             }
 
             //Do collision detection.
             checkCollision();
 
-            //End of turn, increment turn value
+            //End of turn, increment turn value.
             turn++;
-        }
+
+        } while (!gameOver);
         System.out.println("Thank you for playing! :)");
+    }
+
+    //Turn functionality.
+    public void doTurn(char colour) {
+        boolean move;
+        int selectedX;
+        int selectedY;
+        int destinationX;
+        int destinationY;
+        String input;
+
+        //Will add input validation later.
+        do {
+            System.out.println("Please select a piece to move: [a-h, 0-8]");
+            input = inputScanner.nextLine();
+            selectedY = Character.getNumericValue(input.charAt(0) - 1);
+            selectedX = Character.getNumericValue(input.charAt(1) - 1);
+            move = selectPiece(selectedX, selectedY, colour);
+        } while (!move);
+
+        do {
+            System.out.println("Now please enter a destination for the piece: [a-h, 0-8]");
+            input = inputScanner.nextLine();
+            destinationY = Character.getNumericValue(input.charAt(0) - 1);
+            destinationX = Character.getNumericValue(input.charAt(1) - 1);
+            move = selectPieceDestination(destinationX, destinationY, colour);
+            if (move) {
+                pieceArray[destinationX][destinationY] = selectedPiece;
+                pieceArray[selectedX][selectedY] = createPiece("EMPTY", '1');
+            }
+        } while (!move);
     }
 
     //Create pieces in array.
@@ -134,7 +157,7 @@ public class Game {
         }
     }
 
-    //Switch case for 'royal row' on board.
+    //Switch case for 'royal row' on board. Probably change this to an enum in time.
     public void createRoyalRowPieces(int row, int column, char colour) {
         switch (column) {
             case 0:
@@ -167,39 +190,40 @@ public class Game {
     public Piece createPiece(String piece, char colour) {
         if (piece.equalsIgnoreCase("EMPTY")) {
             return pieceFactory.getEmptyPiece();
+        } else {
+            return pieceFactory.getPiece(piece, colour);
         }
-        return pieceFactory.getPiece(piece, colour);
     }
 
     public void checkCollision() {
 
     }
 
-    public boolean validateSelectedPiece(String input) {
-        int x = (int) input.charAt(0);
-        int y = (int) input.charAt(1);
+    public boolean selectPiece(int x, int y, char colour) {
         Piece tempPiece = pieceArray[x][y];
 
-        if (tempPiece.getAlive() == 'Y') {
-            selectedPiece = tempPiece;
-            return true;
+        if (tempPiece.getColour() == colour) {
+            if (tempPiece.getAlive() == 'Y') {
+                selectedPiece = tempPiece;
+                return true;
+            } else {
+                System.out.println("Incorrect selection.");
+                return false;
+            }
         } else {
-            System.out.println("Incorrect selection.");
             return false;
         }
     }
 
-    public boolean validateSelectedPieceDestination(String input) {
-        int x = (int) input.charAt(0);
-        int y = (int) input.charAt(1);
+    public boolean selectPieceDestination(int x, int y, char colour) {
         Piece tempPiece = pieceArray[x][y];
 
         if (tempPiece instanceof Empty) {
-            selectedPiece = tempPiece;
             return true;
-        } else if (tempPiece.getColour() == userColour) {
+        } else if (tempPiece.getColour() != colour) {
             return true;
         } else {
+            System.out.println("Incorrect destination.");
             return false;
         }
     }

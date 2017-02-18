@@ -4,26 +4,22 @@ public class King extends Piece {
 
     private final char whitePiece = '♔';
     private final char blackPiece = '♚';
-    private char pieceIcon;
-
-    public void setPieceIcon(char side) {
-        switch (side) {
-            case 'W':
-                pieceIcon = whitePiece;
-                break;
-            case 'B':
-                pieceIcon = blackPiece;
-                break;
-        }
-    }
-
-    public char getPieceIcon() {
-        return pieceIcon;
-    }
 
     public King(char inputColour) {
-        super.setColour(inputColour);
-        setPieceIcon(inputColour);
+        super(inputColour);
+        setPieceIcon();
+    }
+    
+    @Override
+    public void setPieceIcon() {
+        switch (getColour()) {
+            case 'W':
+                this.setPieceIcon(whitePiece);
+                break;
+            case 'B':
+                this.setPieceIcon(blackPiece);
+                break;
+        }
     }
 
     @Override

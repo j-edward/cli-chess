@@ -3,9 +3,7 @@ package pieces;
 import pieces.*;
 
 public class PieceFactory {
-
-    char c = 'h';
-
+    
     public Piece getPiece(String pieceType, char colour) {
         if (pieceType == null) {
             return null;

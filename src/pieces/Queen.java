@@ -4,26 +4,23 @@ public class Queen extends Piece {
 
     private final char whitePiece = '♕';
     private final char blackPiece = '♛';
-    private char pieceIcon;
-
-    public void setPieceIcon(char side) {
-        switch (side) {
-            case 'W':
-                pieceIcon = whitePiece;
-                break;
-            case 'B':
-                pieceIcon = blackPiece;
-                break;
-        }
-    }
-
-    public char getPieceIcon() {
-        return pieceIcon;
-    }
 
     public Queen(char inputColour) {
-        super.setColour(inputColour);
-        setPieceIcon(inputColour);
+        super(inputColour);
+        setPieceIcon();
+    }
+    
+    //Override super-class setter to set piece symbol, based on colour.
+    @Override
+    public void setPieceIcon() {
+        switch (getColour()) {
+            case 'W':
+                this.setPieceIcon(whitePiece);
+                break;
+            case 'B':
+                this.setPieceIcon(blackPiece);
+                break;
+        }
     }
 
     @Override
@@ -35,5 +32,4 @@ public class Queen extends Piece {
     public void onDestroy() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

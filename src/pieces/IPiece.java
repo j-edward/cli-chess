@@ -8,5 +8,5 @@ public interface IPiece {
 
     char getPieceIcon();
 
-    void setPieceIcon(char side);
+    void setPieceIcon();
 }
