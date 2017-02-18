@@ -1,24 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pieces;
 
-/**
- *
- * @author Joe
- */
 public class Empty extends Piece {
 
     private final char pieceType = ' ';
 
-    public Empty(char inputColour) {
-        super(inputColour);
+    public Empty() {
         super.setAlive('N');
     }
 
-    public char getPieceType() {
+    public char getPieceIcon() {
         return pieceType;
     }
 
@@ -33,7 +23,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public void setPieceType(char side) {
+    public void setPieceIcon(char side) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

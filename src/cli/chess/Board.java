@@ -10,8 +10,8 @@ public class Board {
         System.out.println("_________________________________________________________________________");
         System.out.println("                    --------------------------------------");
         for (int i = 0; i < 8; i++) {
-            System.out.println("                    | " + array[i][0].getPieceType() + " | " + array[i][1].getPieceType() + " | " + array[i][2].getPieceType() + " | " + array[i][3].getPieceType() +
-                    " | " + array[i][4].getPieceType() + " | " + array[i][5].getPieceType() + " | " + array[i][6].getPieceType() + " | " + array[i][7].getPieceType() + " |");
+            System.out.println("                    | " + array[i][0].getPieceIcon() + " | " + array[i][1].getPieceIcon() + " | " + array[i][2].getPieceIcon() + " | " + array[i][3].getPieceIcon()
+                    + " | " + array[i][4].getPieceIcon() + " | " + array[i][5].getPieceIcon() + " | " + array[i][6].getPieceIcon() + " | " + array[i][7].getPieceIcon() + " |");
             System.out.println("                    --------------------------------------");
         }
     }
