@@ -10,12 +10,10 @@ public class Castle extends Piece {
         setPieceIcon();
     }
 
+    @Override
     public boolean canMove(Piece[][] array, int xTar, int yTar, int xSelec, int ySelec) {
         //If target x or y = selected x or y, return true
-        if (xTar == xSelec || yTar == ySelec) {
-            return true;
-        }
-        return false;
+        return xTar == xSelec || yTar == ySelec;
     }
 
     @Override

@@ -9,7 +9,14 @@ public class Queen extends Piece {
         super(inputColour);
         setPieceIcon();
     }
-    
+
+    @Override
+    public boolean canMove(Piece[][] array, int xTar, int yTar, int xSelec, int ySelec) {
+        //Queen behaviour is a combination of Bishop and Castle.
+        return (yTar == xTar + xSelec) || (yTar == xTar + (ySelec - xSelec))
+                || (xTar == xSelec || yTar == ySelec);
+    }
+
     //Override super-class setter to set piece symbol, based on colour.
     @Override
     public void setPieceIcon() {
@@ -21,10 +28,5 @@ public class Queen extends Piece {
                 this.setPieceIcon(blackPiece);
                 break;
         }
-    }
-
-    @Override
-    public boolean canMove(Piece[][] array, int destX, int destY, int xSelec, int ySelec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -10,8 +10,10 @@ public class Bishop extends Piece {
         setPieceIcon();
     }
 
+    @Override
     public boolean canMove(Piece[][] array, int xTar, int yTar, int xSelec, int ySelec) {
-        return false;
+        //Bishop only allows for diagonal movement.
+        return (yTar == xTar + xSelec) || (yTar == xTar + (ySelec - xSelec));
     }
 
     @Override

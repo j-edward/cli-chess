@@ -2,15 +2,16 @@ package pieces;
 
 public class Empty extends Piece {
 
-    private final char pieceType = ' ';
+    private final char emptyPiece = ' ';
 
     public Empty() {
         super('1');
         super.setIsAlive(false);
+        setPieceIcon(emptyPiece);
     }
 
     public char getPieceIcon() {
-        return pieceType;
+        return emptyPiece;
     }
 
     @Override

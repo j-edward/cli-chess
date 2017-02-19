@@ -5,16 +5,16 @@ public abstract class Piece implements IPiece {
     private char colour;
     private boolean isAlive;
     private char pieceIcon;
-    
+
     public Piece(char inputColour) {
         colour = inputColour;
         isAlive = true;
     }
-    
-    public void destroy(){
+
+    public void destroy() {
         isAlive = false;
     }
-    
+
     public char getPieceIcon() {
         return pieceIcon;
     }
@@ -22,7 +22,7 @@ public abstract class Piece implements IPiece {
     public void setPieceIcon(char pieceIcon) {
         this.pieceIcon = pieceIcon;
     }
-    
+
     public boolean isAlive() {
         return isAlive;
     }

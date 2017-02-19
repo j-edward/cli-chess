@@ -93,7 +93,6 @@ public class Game {
         String pieceName;
 
         //Will add input validation later!
-
         //Select piece.
         do {
             System.out.println(colour + " Player: Please select a piece to move: [1-8, 1-8]");
@@ -103,7 +102,7 @@ public class Game {
             isLegal = selectPiece(selectedX, selectedY, colour);
             System.out.println("");
         } while (!isLegal);
-        
+
         pieceName = selectedPiece.getClass().getCanonicalName().substring(7);
         //Select destination.
         do {
@@ -114,14 +113,14 @@ public class Game {
             tarCol = Character.getNumericValue(input.charAt(0) - 1);
 
             isLegal = selectPieceDestination(tarRow, tarCol, colour);
-            
+
             //If legal move, finally check if piece can actually even move there.
             if (isLegal) {
                 if (pieceArray[selectedX][selectedY].canMove(pieceArray, tarRow, tarCol, selectedX, selectedY)) {
                     pieceArray[tarRow][tarCol].destroy();
                     pieceArray[tarRow][tarCol] = selectedPiece;
                     pieceArray[selectedX][selectedY] = createPiece("EMPTY", '1');
-                } else{
+                } else {
                     isLegal = false;
                     System.out.println(pieceName + " is unable to move to that location.");
                     System.out.println("");

@@ -9,7 +9,7 @@ public class King extends Piece {
         super(inputColour);
         setPieceIcon();
     }
-    
+
     @Override
     public void setPieceIcon() {
         switch (getColour()) {
