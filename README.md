@@ -1,8 +1,12 @@
-![Logo](https://github.com/j-edward/CLI-Chess/blob/img/chess_logo.JPG)
+<p align="center">
+  <img src="https://github.com/j-edward/CLI-Chess/blob/img/chess_logo.JPG" alt="logo"/>
+</p>
 
 This is a simple Chess game I'm making for fun. Made one back in first year of Computing A-Level, but was far from ideal.
 
-![Screenshot1](https://github.com/j-edward/CLI-Chess/blob/img/chess_screens.png)
+<p align="center">
+  <img src="https://github.com/j-edward/CLI-Chess/blob/img/chess_screens.png" alt="screenshot"/>
+</p>
 
 ## Aims
 * Actually **finish** one of these projects...
