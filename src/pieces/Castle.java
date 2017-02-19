@@ -21,11 +21,6 @@ public class Castle extends Piece {
                 break;
         }
     }
-    
-    @Override
-    public void onMove(int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public void onDestroy() {

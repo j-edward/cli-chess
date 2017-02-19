@@ -6,15 +6,15 @@
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/King.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Castle.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Empty.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/cli/chess/Board.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Piece.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/IPiece.java</file>
+            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/cli/chess/Board.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Bishop.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Pawn.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Knight.java</file>
+            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/PieceFactory.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/cli/chess/Game.java</file>
             <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Queen.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/cli/chess/CLIChess.java</file>
         </group>
     </open-files>
 </project-private>

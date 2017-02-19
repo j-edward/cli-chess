@@ -6,7 +6,7 @@ import pieces.*;
 public class Game {
 
     Board board;
-    Scanner inputScanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
     Piece selectedPiece;
     Piece[][] pieceArray = new Piece[8][8];
     PieceFactory pieceFactory = new PieceFactory();
@@ -15,8 +15,6 @@ public class Game {
     char userColour;
     char oppColour;
     int turn;
-    int selectedX;
-    int selectedY;
 
     //Creates pieces, and maps out game.
     //Additionally asks user for side preference.
@@ -32,7 +30,7 @@ public class Game {
 
         playAgain = true;
         while (playAgain) {
-            userColour = inputScanner.nextLine().toUpperCase().charAt(0);
+            userColour = scanner.nextLine().toUpperCase().charAt(0);
             System.out.println("_________________________________________________________________________");
             switch (userColour) {
                 case 'B':
@@ -58,14 +56,11 @@ public class Game {
         boolean gameOver;
 
         System.out.println("Starting game for " + userColour + " side...");
-        System.out.println("_________________________________________________________________________");
-
         generatePieces();
 
         gameOver = false;
         do {
             board.showBoard(pieceArray);
-            System.out.println("_________________________________________________________________________");
 
             //Start turn
             switch (turn % 2) {
@@ -99,17 +94,19 @@ public class Game {
         String input;
 
         //Will add input validation later.
+        //Select piece.
         do {
-            System.out.println("Please select a piece to move: [a-h, 0-8]");
-            input = inputScanner.nextLine();
+            System.out.println(colour + " Player: Please select a piece to move: [1-8, 1-8]");
+            input = scanner.nextLine();
             selectedY = Character.getNumericValue(input.charAt(0) - 1);
             selectedX = Character.getNumericValue(input.charAt(1) - 1);
             move = selectPiece(selectedX, selectedY, colour);
         } while (!move);
 
+        //Select destination.
         do {
-            System.out.println("Now please enter a destination for the piece: [a-h, 0-8]");
-            input = inputScanner.nextLine();
+            System.out.println("Now please enter a destination for the piece: [1-8, 1-8]");
+            input = scanner.nextLine();
             destinationY = Character.getNumericValue(input.charAt(0) - 1);
             destinationX = Character.getNumericValue(input.charAt(1) - 1);
             move = selectPieceDestination(destinationX, destinationY, colour);
@@ -201,7 +198,7 @@ public class Game {
 
     public boolean selectPiece(int x, int y, char colour) {
         Piece tempPiece = pieceArray[x][y];
-
+        
         if (tempPiece.getColour() == colour) {
             if (tempPiece.getAlive() == 'Y') {
                 selectedPiece = tempPiece;
