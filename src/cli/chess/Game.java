@@ -85,8 +85,8 @@ public class Game {
     //Turn functionality.
     public void doTurn(char colour) {
         boolean isLegal;
-        int selectedX;
-        int selectedY;
+        int rowSelec;
+        int colSelec;
         int tarRow;
         int tarCol;
         String input;
@@ -97,9 +97,9 @@ public class Game {
         do {
             System.out.println(colour + " Player: Please select a piece to move: [1-8, 1-8]");
             input = scanner.nextLine();
-            selectedX = Character.getNumericValue(input.charAt(1) - 1);
-            selectedY = Character.getNumericValue(input.charAt(0) - 1);
-            isLegal = selectPiece(selectedX, selectedY, colour);
+            rowSelec = Character.getNumericValue(input.charAt(1) - 1);
+            colSelec = Character.getNumericValue(input.charAt(0) - 1);
+            isLegal = selectPiece(rowSelec, colSelec, colour);
             System.out.println("");
         } while (!isLegal);
 
@@ -113,13 +113,13 @@ public class Game {
             tarCol = Character.getNumericValue(input.charAt(0) - 1);
 
             isLegal = selectPieceDestination(tarRow, tarCol, colour);
-
+            
             //If legal move, finally check if piece can actually even move there.
             if (isLegal) {
-                if (pieceArray[selectedX][selectedY].canMove(pieceArray, tarRow, tarCol, selectedX, selectedY)) {
+                if (pieceArray[rowSelec][colSelec].canMove(pieceArray, tarCol, tarRow, colSelec, rowSelec)) {
                     pieceArray[tarRow][tarCol].destroy();
                     pieceArray[tarRow][tarCol] = selectedPiece;
-                    pieceArray[selectedX][selectedY] = createPiece("EMPTY", '1');
+                    pieceArray[rowSelec][colSelec] = createPiece("EMPTY", '1');
                 } else {
                     isLegal = false;
                     System.out.println(pieceName + " is unable to move to that location.");
@@ -150,10 +150,10 @@ public class Game {
                         createRoyalRowPieces(row, column, oppColour);
                         break;
                     case 1:
-                        pieceArray[row][column] = createPiece("Pawn", oppColour);
+                        pieceArray[row][column] = createPiece("PAWN", oppColour);
                         break;
                     case 6:
-                        pieceArray[row][column] = createPiece("Pawn", userColour);
+                        pieceArray[row][column] = createPiece("PAWN", userColour);
                         break;
                     case 7:
                         createRoyalRowPieces(row, column, userColour);
@@ -204,8 +204,8 @@ public class Game {
         }
     }
 
-    public boolean selectPiece(int col, int row, char colour) {
-        Piece tempPiece = pieceArray[col][row];
+    public boolean selectPiece(int row, int col, char colour) {
+        Piece tempPiece = pieceArray[row][col];
 
         if (tempPiece.getColour() == colour) {
             if (tempPiece.isAlive()) {
@@ -221,8 +221,8 @@ public class Game {
         }
     }
 
-    public boolean selectPieceDestination(int col, int row, char colour) {
-        Piece tempPiece = pieceArray[col][row];
+    public boolean selectPieceDestination(int row, int col, char colour) {
+        Piece tempPiece = pieceArray[row][col];
 
         if (tempPiece instanceof Empty) {
             return true;
