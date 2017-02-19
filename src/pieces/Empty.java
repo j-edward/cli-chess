@@ -6,7 +6,7 @@ public class Empty extends Piece {
 
     public Empty() {
         super('1');
-        super.setAlive('N');
+        super.setIsAlive(false);
     }
 
     public char getPieceIcon() {
@@ -14,12 +14,12 @@ public class Empty extends Piece {
     }
 
     @Override
-    public void onDestroy() {
+    public void setPieceIcon() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void setPieceIcon() {
+    public boolean canMove(Piece[][] array, int destX, int destY, int xSelec, int ySelec) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

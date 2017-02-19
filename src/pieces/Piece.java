@@ -3,12 +3,16 @@ package pieces;
 public abstract class Piece implements IPiece {
 
     private char colour;
-    private char alive;
+    private boolean isAlive;
     private char pieceIcon;
     
     public Piece(char inputColour) {
         colour = inputColour;
-        alive = 'Y';
+        isAlive = true;
+    }
+    
+    public void destroy(){
+        isAlive = false;
     }
     
     public char getPieceIcon() {
@@ -19,12 +23,12 @@ public abstract class Piece implements IPiece {
         this.pieceIcon = pieceIcon;
     }
     
-    public char getAlive() {
-        return alive;
+    public boolean isAlive() {
+        return isAlive;
     }
 
-    public void setAlive(char alive) {
-        this.alive = alive;
+    public void setIsAlive(boolean alive) {
+        this.isAlive = alive;
     }
 
     public char getColour() {

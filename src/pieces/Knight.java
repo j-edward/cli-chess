@@ -21,9 +21,9 @@ public class Knight extends Piece {
                 break;
         }
     }
-    
+
     @Override
-    public void onDestroy() {
+    public boolean canMove(Piece[][] array, int destX, int destY, int xSelec, int ySelec) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

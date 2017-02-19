@@ -4,12 +4,16 @@ public class Bishop extends Piece {
 
     private final char whitePiece = '♗';
     private final char blackPiece = '♝';
-    
+
     public Bishop(char inputColour) {
         super(inputColour);
         setPieceIcon();
     }
-    
+
+    public boolean canMove(Piece[][] array, int xTar, int yTar, int xSelec, int ySelec) {
+        return false;
+    }
+
     @Override
     public void setPieceIcon() {
         switch (getColour()) {
@@ -20,10 +24,5 @@ public class Bishop extends Piece {
                 this.setPieceIcon(blackPiece);
                 break;
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

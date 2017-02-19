@@ -75,8 +75,6 @@ public class Game {
             }
 
             //Do collision detection.
-            checkCollision();
-
             //End of turn, increment turn value.
             turn++;
 
@@ -86,35 +84,50 @@ public class Game {
 
     //Turn functionality.
     public void doTurn(char colour) {
-        boolean move;
+        boolean isLegal;
         int selectedX;
         int selectedY;
-        int destinationX;
-        int destinationY;
+        int tarRow;
+        int tarCol;
         String input;
+        String pieceName;
 
-        //Will add input validation later.
+        //Will add input validation later!
+
         //Select piece.
         do {
             System.out.println(colour + " Player: Please select a piece to move: [1-8, 1-8]");
             input = scanner.nextLine();
-            selectedY = Character.getNumericValue(input.charAt(0) - 1);
             selectedX = Character.getNumericValue(input.charAt(1) - 1);
-            move = selectPiece(selectedX, selectedY, colour);
-        } while (!move);
-
+            selectedY = Character.getNumericValue(input.charAt(0) - 1);
+            isLegal = selectPiece(selectedX, selectedY, colour);
+            System.out.println("");
+        } while (!isLegal);
+        
+        pieceName = selectedPiece.getClass().getCanonicalName().substring(7);
         //Select destination.
         do {
-            System.out.println("Now please enter a destination for the piece: [1-8, 1-8]");
+            System.out.println(pieceName + " is selected.");
+            System.out.println("Please now enter a destination for the piece: [1-8, 1-8]");
             input = scanner.nextLine();
-            destinationY = Character.getNumericValue(input.charAt(0) - 1);
-            destinationX = Character.getNumericValue(input.charAt(1) - 1);
-            move = selectPieceDestination(destinationX, destinationY, colour);
-            if (move) {
-                pieceArray[destinationX][destinationY] = selectedPiece;
-                pieceArray[selectedX][selectedY] = createPiece("EMPTY", '1');
+            tarRow = Character.getNumericValue(input.charAt(1) - 1);
+            tarCol = Character.getNumericValue(input.charAt(0) - 1);
+
+            isLegal = selectPieceDestination(tarRow, tarCol, colour);
+            
+            //If legal move, finally check if piece can actually even move there.
+            if (isLegal) {
+                if (pieceArray[selectedX][selectedY].canMove(pieceArray, tarRow, tarCol, selectedX, selectedY)) {
+                    pieceArray[tarRow][tarCol].destroy();
+                    pieceArray[tarRow][tarCol] = selectedPiece;
+                    pieceArray[selectedX][selectedY] = createPiece("EMPTY", '1');
+                } else{
+                    isLegal = false;
+                    System.out.println(pieceName + " is unable to move to that location.");
+                    System.out.println("");
+                }
             }
-        } while (!move);
+        } while (!isLegal);
     }
 
     //Create pieces in array.
@@ -192,28 +205,25 @@ public class Game {
         }
     }
 
-    public void checkCollision() {
+    public boolean selectPiece(int col, int row, char colour) {
+        Piece tempPiece = pieceArray[col][row];
 
-    }
-
-    public boolean selectPiece(int x, int y, char colour) {
-        Piece tempPiece = pieceArray[x][y];
-        
         if (tempPiece.getColour() == colour) {
-            if (tempPiece.getAlive() == 'Y') {
+            if (tempPiece.isAlive()) {
                 selectedPiece = tempPiece;
                 return true;
             } else {
-                System.out.println("Incorrect selection.");
+                System.out.println("No piece found!");
                 return false;
             }
         } else {
+            System.out.println("Please select a piece matching your colour.");
             return false;
         }
     }
 
-    public boolean selectPieceDestination(int x, int y, char colour) {
-        Piece tempPiece = pieceArray[x][y];
+    public boolean selectPieceDestination(int col, int row, char colour) {
+        Piece tempPiece = pieceArray[col][row];
 
         if (tempPiece instanceof Empty) {
             return true;
