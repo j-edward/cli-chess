@@ -9,3 +9,4 @@ This is a simple Chess game I'm making for fun. Made one back in first year of C
 * 2 player functionality
 * Potentially against an AI? (I'm currently studying a module on Artificial Intelligence @ University)
 * Play against one another across a network (♞ v ♘)
+* Convert it to Swing GUI (I may do this, but the CLI has some charm)
