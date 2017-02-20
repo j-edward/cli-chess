@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Castle.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Empty.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Piece.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/cli/chess/Board.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/PieceFactory.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Queen.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/King.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/IPiece.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Bishop.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Pawn.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/pieces/Knight.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/cli/chess/Game.java</file>
-            <file>file:/C:/Users/Joe/Desktop/CLI-Chess/src/cli/chess/CLIChess.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

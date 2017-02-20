@@ -8,7 +8,6 @@ public class Game {
     Board board;
     Scanner scanner = new Scanner(System.in);
     Piece selectedPiece;
-    Piece[][] pieceArray = new Piece[8][8];
     PieceFactory pieceFactory = new PieceFactory();
     String player1Input;
     boolean playAgain;
@@ -19,9 +18,7 @@ public class Game {
     //Creates pieces, and maps out game.
     //Additionally asks user for side preference.
     public void initGame() {
-        board = new Board();
 
-        board.demoBoard();
         System.out.println("                            Welcome to Chess CLI.");
         System.out.println("                         Created by Joe Howell, 2017.");
         System.out.println("_________________________________________________________________________");
@@ -54,13 +51,13 @@ public class Game {
     //Starts game with user choices.
     public void startGame() {
         boolean gameOver;
+        board = new Board(userColour, oppColour);
 
         System.out.println("Starting game for " + userColour + " side...");
-        generatePieces();
 
         gameOver = false;
         do {
-            board.showBoard(pieceArray);
+            board.showBoard();
 
             //Start turn
             switch (turn % 2) {
@@ -99,7 +96,10 @@ public class Game {
             input = scanner.nextLine();
             rowSelec = Character.getNumericValue(input.charAt(1) - 1);
             colSelec = Character.getNumericValue(input.charAt(0) - 1);
-            isLegal = selectPiece(rowSelec, colSelec, colour);
+            isLegal = board.selectPiece(rowSelec, colSelec, colour);
+            if (isLegal) {
+                selectedPiece = board.getPieceArray()[rowSelec][colSelec];
+            }
             System.out.println("");
         } while (!isLegal);
 
@@ -112,14 +112,12 @@ public class Game {
             tarRow = Character.getNumericValue(input.charAt(1) - 1);
             tarCol = Character.getNumericValue(input.charAt(0) - 1);
 
-            isLegal = selectPieceDestination(tarRow, tarCol, colour);
-            
+            isLegal = board.selectPieceDestination(tarRow, tarCol, colour);
+
             //If legal move, finally check if piece can actually even move there.
             if (isLegal) {
-                if (pieceArray[rowSelec][colSelec].canMove(pieceArray, tarCol, tarRow, colSelec, rowSelec)) {
-                    pieceArray[tarRow][tarCol].destroy();
-                    pieceArray[tarRow][tarCol] = selectedPiece;
-                    pieceArray[rowSelec][colSelec] = createPiece("EMPTY", '1');
+                if (selectedPiece.canMove(board.getPieceArray(), tarCol, tarRow, colSelec, rowSelec)) {
+                    board.doMove(selectedPiece, tarCol, tarRow, colSelec, rowSelec);
                 } else {
                     isLegal = false;
                     System.out.println(pieceName + " is unable to move to that location.");
@@ -129,108 +127,4 @@ public class Game {
         } while (!isLegal);
     }
 
-    //Create pieces in array.
-    public void generatePieces() {
-
-        //Based on user's choice of side, make set opposition to the opposite.
-        switch (userColour) {
-            case 'W':
-                oppColour = 'B';
-                break;
-            case 'B':
-                oppColour = 'W';
-                break;
-        }
-
-        //Main loop for generating pieces on board
-        for (int row = 0; row < pieceArray.length; row++) {
-            for (int column = 0; column < pieceArray.length; column++) {
-                switch (row) {
-                    case 0:
-                        createRoyalRowPieces(row, column, oppColour);
-                        break;
-                    case 1:
-                        pieceArray[row][column] = createPiece("PAWN", oppColour);
-                        break;
-                    case 6:
-                        pieceArray[row][column] = createPiece("PAWN", userColour);
-                        break;
-                    case 7:
-                        createRoyalRowPieces(row, column, userColour);
-                        break;
-                    default:
-                        pieceArray[row][column] = createPiece("EMPTY", '1');
-                }
-
-            }
-        }
-    }
-
-    //Switch case for 'royal row' on board. Probably change this to an enum in time.
-    public void createRoyalRowPieces(int row, int column, char colour) {
-        switch (column) {
-            case 0:
-                pieceArray[row][column] = createPiece("CASTLE", colour);
-                break;
-            case 1:
-                pieceArray[row][column] = createPiece("KNIGHT", colour);
-                break;
-            case 2:
-                pieceArray[row][column] = createPiece("BISHOP", colour);
-                break;
-            case 3:
-                pieceArray[row][column] = createPiece("QUEEN", colour);
-                break;
-            case 4:
-                pieceArray[row][column] = createPiece("KING", colour);
-                break;
-            case 5:
-                pieceArray[row][column] = createPiece("BISHOP", colour);
-                break;
-            case 6:
-                pieceArray[row][column] = createPiece("KNIGHT", colour);
-                break;
-            case 7:
-                pieceArray[row][column] = createPiece("CASTLE", colour);
-                break;
-        }
-    }
-
-    public Piece createPiece(String piece, char colour) {
-        if (piece.equalsIgnoreCase("EMPTY")) {
-            return pieceFactory.getEmptyPiece();
-        } else {
-            return pieceFactory.getPiece(piece, colour);
-        }
-    }
-
-    public boolean selectPiece(int row, int col, char colour) {
-        Piece tempPiece = pieceArray[row][col];
-
-        if (tempPiece.getColour() == colour) {
-            if (tempPiece.isAlive()) {
-                selectedPiece = tempPiece;
-                return true;
-            } else {
-                System.out.println("No piece found!");
-                return false;
-            }
-        } else {
-            System.out.println("Please select a piece matching your colour.");
-            return false;
-        }
-    }
-
-    public boolean selectPieceDestination(int row, int col, char colour) {
-        Piece tempPiece = pieceArray[row][col];
-
-        if (tempPiece instanceof Empty) {
-            return true;
-        } else if (tempPiece.getColour() != colour) {
-            return true;
-        } else {
-            System.out.println("Incorrect destination.");
-            return false;
-        }
-    }
 }
