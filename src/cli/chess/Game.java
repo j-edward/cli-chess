@@ -1,55 +1,59 @@
 package cli.chess;
 
 import java.util.Scanner;
-import pieces.*;
+import pieces.Piece;
 import utilities.*;
 
 public class Game {
 
     private Board board;
-    private Utilities util;
-    private Console console;
-    private Scanner scanner = new Scanner(System.in);
-    private Piece selectedPiece;
-    private PieceFactory pieceFactory = new PieceFactory();
+    private final Utilities util = new Utilities();
+    private final Console console = new Console();
+    private final Scanner scanner = new Scanner(System.in);
     private boolean playAgain;
-    private char userColour;
-    private char oppColour;
     private int turn;
 
     //Creates pieces, and maps out game.
     //Additionally asks user for side preference.
     public void initGame() {
+        char p1Colour;
         console.promptDemo();
         playAgain = true;
         while (playAgain) {
-            userColour = scanner.nextLine().toUpperCase().charAt(0);
+            p1Colour = scanner.nextLine().toUpperCase().charAt(0);
             console.lineBreak();
-            switch (userColour) {
+            switch (p1Colour) {
                 case 'B':
                     turn = 1;
-                    startGame();
+                    startGame(p1Colour);
                     break;
                 case 'W':
                     turn = 0;
-                    startGame();
+                    startGame(p1Colour);
                     break;
                 case 'E':
                     playAgain = false;
                     console.promptEndGame();
                     break;
                 default:
-                    console.promptErrorInvalidColourSelection(userColour);
+                    console.promptErrorInvalidColourSelection(p1Colour);
             }
         }
     }
 
     //Starts game with user choices.
-    public void startGame() {
+    public void startGame(char p1Colour) {
         boolean gameOver;
-        board = new Board(userColour, oppColour);
+        char p2Colour;
+        
+        //Create board.
+        board = new Board(p1Colour);
 
-        console.promptStartingGame(userColour);
+        //Assign colours based on board properties.
+        p1Colour = board.getP1Colour();
+        p2Colour = board.getP2Colour();
+        
+        console.promptStartingGame(p1Colour);
 
         gameOver = false;
         do {
@@ -59,11 +63,11 @@ public class Game {
             switch (turn % 2) {
                 case 0:
                     //P1 turn.
-                    doTurn(userColour);
+                    doTurn(p1Colour);
                     break;
                 case 1:
                     //CPU turn.
-                    doTurn(oppColour);
+                    doTurn(p2Colour);
                     break;
             }
             
@@ -76,6 +80,7 @@ public class Game {
 
     //Turn functionality.
     public void doTurn(char colour) {
+        Piece selectedPiece = null;
         boolean isLegal;
         int[] locPos = new int[2];
         int[] tarPos = new int[2];
@@ -93,10 +98,11 @@ public class Game {
             locRow = locPos[0];
             locCol = locPos[1];
 
-            isLegal = board.selectPiece(locPos[0], locPos[1], colour);
+            isLegal = board.selectPiece(locRow, locCol, colour);
 
+            //If move is legal, set selected piece to user input.
             if (isLegal) {
-                selectedPiece = board.getPieceArray()[locPos[0]][locPos[1]];
+                selectedPiece = board.getPieceArray()[locRow][locCol];
             }
             console.lineBreak();
         } while (!isLegal);
@@ -111,7 +117,7 @@ public class Game {
             tarRow = tarPos[0];
             tarCol = tarPos[1];
 
-            isLegal = board.selectPieceDestination(tarPos[0], tarPos[1], colour);
+            isLegal = board.selectPieceDestination(tarRow, tarCol, colour);
 
             //If legal move, finally check if piece can actually even move there.
             if (isLegal) {

@@ -1,6 +1,8 @@
 package cli.chess;
 
-import pieces.*;
+import pieces.Piece;
+import pieces.PieceFactory;
+import pieces.Empty;
 
 public class Board {
 
@@ -10,20 +12,29 @@ public class Board {
     private final char p2Colour;
     private PieceFactory pieceFactory = new PieceFactory();
 
-    public Board(char p1Colour, char p2Colour) {
+    public Board(char p1Colour) {
         //Based on user's choice of side, make set opposition to the opposite.
-        switch (p1Colour) {
+        this.p1Colour = p1Colour;
+        
+        switch (this.p1Colour) {
             case 'W':
                 p2Colour = 'B';
                 break;
             case 'B':
                 p2Colour = 'W';
                 break;
+            default:
+                p2Colour = '1';
         }
+         generatePieces();
+    }
 
-        this.p1Colour = p1Colour;
-        this.p2Colour = p2Colour;
-        generatePieces();
+    public char getP1Colour() {
+        return p1Colour;
+    }
+
+    public char getP2Colour() {
+        return p2Colour;
     }
 
     public Piece[][] getPieceArray() {
