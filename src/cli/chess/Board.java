@@ -146,27 +146,4 @@ public class Board {
             return pieceFactory.getPiece(piece, colour);
         }
     }
-
-    //I'm well aware there is 9 spaces on the blank rows... still figuring out a solution to the blank space...
-    public void demoBoard() {
-        System.out.println("_________________________________________________________________________");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    | ♜ | ♞ | ♝ | ♛ | ♚ | ♝ | ♞ | ♜ |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    | ♟ | ♟ | ♟ | ♟ | ♟ | ♟ | ♟ | ♟ |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    |   |   |   |   |   |   |   |   |   |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    |   |   |   |   |   |   |   |   |   |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    |   |   |   |   |   |   |   |   |   |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    |   |   |   |   |   |   |   |   |   |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ | ♙ |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("                    | ♖ | ♘ | ♗ | ♕ | ♔ | ♗ | ♘ | ♖ |");
-        System.out.println("                    -------------------------------------");
-        System.out.println("_________________________________________________________________________");
-    }
 }

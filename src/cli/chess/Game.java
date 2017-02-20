@@ -2,33 +2,29 @@ package cli.chess;
 
 import java.util.Scanner;
 import pieces.*;
+import utilities.*;
 
 public class Game {
 
-    Board board;
-    Scanner scanner = new Scanner(System.in);
-    Piece selectedPiece;
-    PieceFactory pieceFactory = new PieceFactory();
-    String player1Input;
-    boolean playAgain;
-    char userColour;
-    char oppColour;
-    int turn;
+    private Board board;
+    private Utilities util;
+    private Console console;
+    private Scanner scanner = new Scanner(System.in);
+    private Piece selectedPiece;
+    private PieceFactory pieceFactory = new PieceFactory();
+    private boolean playAgain;
+    private char userColour;
+    private char oppColour;
+    private int turn;
 
     //Creates pieces, and maps out game.
     //Additionally asks user for side preference.
     public void initGame() {
-
-        System.out.println("                            Welcome to Chess CLI.");
-        System.out.println("                         Created by Joe Howell, 2017.");
-        System.out.println("_________________________________________________________________________");
-        System.out.println("");
-        System.out.println("Please enter your choice of colour ('W' or 'B') to start.");
-
+        console.promptDemo();
         playAgain = true;
         while (playAgain) {
             userColour = scanner.nextLine().toUpperCase().charAt(0);
-            System.out.println("_________________________________________________________________________");
+            console.lineBreak();
             switch (userColour) {
                 case 'B':
                     turn = 1;
@@ -40,10 +36,10 @@ public class Game {
                     break;
                 case 'E':
                     playAgain = false;
-                    System.out.println("Thank you for playing! :)");
+                    console.promptEndGame();
                     break;
                 default:
-                    System.out.println("'" + userColour + "'" + " is not a valid input. Please try again.");
+                    console.promptErrorInvalidColourSelection(userColour);
             }
         }
     }
@@ -53,7 +49,7 @@ public class Game {
         boolean gameOver;
         board = new Board(userColour, oppColour);
 
-        System.out.println("Starting game for " + userColour + " side...");
+        console.promptStartingGame(userColour);
 
         gameOver = false;
         do {
@@ -70,58 +66,60 @@ public class Game {
                     doTurn(oppColour);
                     break;
             }
-
-            //Do collision detection.
+            
             //End of turn, increment turn value.
             turn++;
 
         } while (!gameOver);
-        System.out.println("Thank you for playing! :)");
+        console.promptEndGame();
     }
 
     //Turn functionality.
     public void doTurn(char colour) {
         boolean isLegal;
-        int rowSelec;
-        int colSelec;
+        int[] locPos = new int[2];
+        int[] tarPos = new int[2];
+        int locRow;
+        int locCol;
         int tarRow;
         int tarCol;
-        String input;
         String pieceName;
 
-        //Will add input validation later!
         //Select piece.
         do {
-            System.out.println(colour + " Player: Please select a piece to move: [1-8, 1-8]");
-            input = scanner.nextLine();
-            rowSelec = Character.getNumericValue(input.charAt(1) - 1);
-            colSelec = Character.getNumericValue(input.charAt(0) - 1);
-            isLegal = board.selectPiece(rowSelec, colSelec, colour);
+            console.promptSelectPiece(colour);
+
+            locPos = util.getCoordsFromInput(scanner.nextLine());
+            locRow = locPos[0];
+            locCol = locPos[1];
+
+            isLegal = board.selectPiece(locPos[0], locPos[1], colour);
+
             if (isLegal) {
-                selectedPiece = board.getPieceArray()[rowSelec][colSelec];
+                selectedPiece = board.getPieceArray()[locPos[0]][locPos[1]];
             }
-            System.out.println("");
+            console.lineBreak();
         } while (!isLegal);
 
-        pieceName = selectedPiece.getClass().getCanonicalName().substring(7);
+        pieceName = util.getPieceName(selectedPiece);
+
         //Select destination.
         do {
-            System.out.println(pieceName + " is selected.");
-            System.out.println("Please now enter a destination for the piece: [1-8, 1-8]");
-            input = scanner.nextLine();
-            tarRow = Character.getNumericValue(input.charAt(1) - 1);
-            tarCol = Character.getNumericValue(input.charAt(0) - 1);
+            console.promptTargetPiece(pieceName);
 
-            isLegal = board.selectPieceDestination(tarRow, tarCol, colour);
+            tarPos = util.getCoordsFromInput(scanner.nextLine());
+            tarRow = tarPos[0];
+            tarCol = tarPos[1];
+
+            isLegal = board.selectPieceDestination(tarPos[0], tarPos[1], colour);
 
             //If legal move, finally check if piece can actually even move there.
             if (isLegal) {
-                if (selectedPiece.canMove(board.getPieceArray(), tarCol, tarRow, colSelec, rowSelec)) {
-                    board.doMove(selectedPiece, tarCol, tarRow, colSelec, rowSelec);
+                if (selectedPiece.canMove(board.getPieceArray(), tarCol, tarRow, locCol, locRow)) {
+                    board.doMove(selectedPiece, tarCol, tarRow, locCol, locRow);
                 } else {
                     isLegal = false;
-                    System.out.println(pieceName + " is unable to move to that location.");
-                    System.out.println("");
+                    console.promptErrorPieceMove(pieceName);
                 }
             }
         } while (!isLegal);

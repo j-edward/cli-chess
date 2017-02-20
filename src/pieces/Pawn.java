@@ -23,7 +23,7 @@ public class Pawn extends Piece {
     @Override
     public boolean canMove(Piece[][] array, int xTar, int yTar, int xSelec, int ySelec) {
         Piece tempPiece = array[xTar][yTar];
-        
+
         if (tempPiece instanceof Empty) {
             if (isFirstGo) {
                 if (xTar == xSelec && yTar - ySelec == 2) {
@@ -31,7 +31,7 @@ public class Pawn extends Piece {
                 }
             }
             return xTar == xSelec && (yTar - ySelec == 1);
-        } else{
+        } else {
             return yTar - 1 == ySelec && (xTar == xSelec + 1 || xTar == xSelec - 1);
         }
     }

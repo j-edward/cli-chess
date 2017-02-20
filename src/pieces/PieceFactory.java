@@ -1,7 +1,5 @@
 package pieces;
 
-import pieces.*;
-
 public class PieceFactory {
 
     public Piece getPiece(String pieceType, char colour) {

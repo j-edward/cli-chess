@@ -1,7 +1,5 @@
 package cli.chess;
 
-import java.util.Scanner;
-
 public class CLIChess {
 
     //Entry point for program. Initialise game instance.
