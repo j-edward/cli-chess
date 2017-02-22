@@ -3,6 +3,7 @@ package cli.chess;
 import pieces.Piece;
 import pieces.PieceFactory;
 import pieces.Empty;
+import utilities.Console;
 
 public class Board {
 
@@ -11,7 +12,8 @@ public class Board {
     private final char p1Colour;
     private final char p2Colour;
     private PieceFactory pieceFactory = new PieceFactory();
-
+    private Console console;
+    
     public Board(char p1Colour) {
         //Based on user's choice of side, make set opposition to the opposite.
         this.p1Colour = p1Colour;
@@ -48,14 +50,14 @@ public class Board {
     //Pass list of pieces to draw on board.
     //Will add 'dead pieces' on side of board.
     public void showBoard() {
-        System.out.println("_________________________________________________________________________");
+        console.lineBreak();
         System.out.println("                    --------------------------------------");
         for (int i = 0; i < boardSize; i++) {
             System.out.println("                    | " + pieceArray[i][0].getPieceIcon() + " | " + pieceArray[i][1].getPieceIcon() + " | " + pieceArray[i][2].getPieceIcon() + " | " + pieceArray[i][3].getPieceIcon()
                     + " | " + pieceArray[i][4].getPieceIcon() + " | " + pieceArray[i][5].getPieceIcon() + " | " + pieceArray[i][6].getPieceIcon() + " | " + pieceArray[i][7].getPieceIcon() + " |");
             System.out.println("                    --------------------------------------");
         }
-        System.out.println("_________________________________________________________________________");
+        console.lineBreak();
     }
 
     //Create pieces in array.
@@ -118,9 +120,10 @@ public class Board {
     }
 
     public boolean selectPiece(int row, int col, char colour) {
-
-        if (pieceArray[row][col].getColour() == colour) {
-            if (pieceArray[row][col].isAlive()) {
+        Piece piece = pieceArray[row][col];
+        
+        if (piece.getColour() == colour) {
+            if (piece.isAlive()) {
                 return true;
             } else {
                 System.out.println("No piece found!");
@@ -133,10 +136,11 @@ public class Board {
     }
 
     public boolean selectPieceDestination(int row, int col, char colour) {
-
-        if (pieceArray[row][col] instanceof Empty) {
+        Piece piece = pieceArray[row][col];
+        
+        if (piece instanceof Empty) {
             return true;
-        } else if (pieceArray[row][col].getColour() != colour) {
+        } else if (piece.getColour() != colour) {
             return true;
         } else {
             System.out.println("Incorrect destination.");

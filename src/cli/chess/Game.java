@@ -1,7 +1,6 @@
 package cli.chess;
 
 import java.util.Scanner;
-import pieces.Piece;
 import utilities.*;
 
 public class Game {
@@ -80,7 +79,6 @@ public class Game {
 
     //Turn functionality.
     public void doTurn(char colour) {
-        Piece selectedPiece = null;
         boolean isLegal;
         int[] locPos = new int[2];
         int[] tarPos = new int[2];
@@ -99,15 +97,10 @@ public class Game {
             locCol = locPos[1];
 
             isLegal = board.selectPiece(locRow, locCol, colour);
-
-            //If move is legal, set selected piece to user input.
-            if (isLegal) {
-                selectedPiece = board.getPieceArray()[locRow][locCol];
-            }
             console.lineBreak();
         } while (!isLegal);
 
-        pieceName = util.getPieceName(selectedPiece);
+        pieceName = util.getPieceName(board.getPieceArray()[locRow][locCol]);
 
         //Select destination.
         do {
@@ -121,8 +114,9 @@ public class Game {
 
             //If legal move, finally check if piece can actually even move there.
             if (isLegal) {
-                if (selectedPiece.canMove(board.getPieceArray(), tarCol, tarRow, locCol, locRow)) {
-                    board.doMove(selectedPiece, tarCol, tarRow, locCol, locRow);
+                if (board.getPieceArray()[locRow][locCol].canMove(board.getPieceArray(),
+                        tarCol, tarRow, locCol, locRow)) {
+                    board.doMove(board.getPieceArray()[locRow][locCol], tarCol, tarRow, locCol, locRow);
                 } else {
                     isLegal = false;
                     console.promptErrorPieceMove(pieceName);
